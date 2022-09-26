@@ -5,6 +5,7 @@ var local = false;
 if (process.argv[2] == "-local"){
     local = true;
 }
+//teste 2022
 
 const schemas = require("./src/schemas");
 const user = require("./src/user");
