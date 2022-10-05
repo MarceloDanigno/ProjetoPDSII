@@ -1,18 +1,23 @@
 // ---- INIT ----
 
-// Testa a linha de comando para ver se será realizado conecção local ou remota
+// Testa a linha de comando para ver se será realizado conexão local ou remota
 var local = false;
+
 if (process.argv[2] == "-local"){
     local = true;
 }
+console.log(local)
 //teste 2022
 
 const schemas = require("./src/schemas");
 const user = require("./src/user");
+const short = require('shortid');
 
 // Inicializa Express para simplificar o código node.
 const express=require("express");
 const app=express()
+
+
 const cors = require('cors');
 // CORS é requirido por utilizar arquivos de pastas diferentes mas todos no localhost
 app.use(cors());
@@ -22,30 +27,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Site de teste ficará na porta 3001 do localhost
 const port = 3001;
-app.use(express.static("test-site/")); // todo arquivo stático de site/ pode ser servido pelo servidor
+app.use(express.static("test-site/")); // todo arquivo estático de site/ pode ser servido pelo servidor
 
 // Inicializa o Mongoose, para tratar os dados do MongoDB.
 const mongoose = require('mongoose');
+
 if (local){
   mongoose.connect('mongodb://127.0.0.1:27017/projetopds').then(()=>{
-    console.log("Conectado ao MongoDB em modo local.");
+    console.log("Conectado ao MongoDB")
   }).catch((err)=>{
     console.log("Houve um erro ao se conectar ao mongoDB: "+err)
   })
-} else {
+}
+ else {
   // Criar novo servidor online
-  //mongoose.connect('TODO').then(()=>{
-  //  console.log("Conectado ao MongoDB em modo remoto.")
-  //}).catch((err)=>{
-  //  console.log("Houve um erro ao se conectar ao mongoDB: "+err)
-  //})
+  mongoose.connect('mongodb+srv://pds2:jwm4EkWGtWkIvDcf@pds2.k1uqoph.mongodb.net/?retryWrites=true&w=majority').then(()=>{
+  console.log("Conectado ao MongoDB em modo remoto.")
+  }).catch((err)=>{
+  console.log("Houve um erro ao se conectar ao mongoDB: "+err)
+  })
 }
 
 // ---- DATABASE ----
 
 // Abre o banco de dados
 const db=mongoose.connection;
-db.once('open', () =>{console.log("Conecção ao banco com sucesso.");})
+db.once('open', () =>{console.log("Sucesso na Conexão com o banco.");})
 
 
 // Models definem as "tabelas"
@@ -64,7 +71,10 @@ app.post("/register", async (req, res, next) => {
     // Roda a função de adicionar usuario e retorna erro se necessário
     try {
         console.log("[LOG] Usuario " + req.body.username + " sendo registrado.");
-        await user.computeNewUser(User, req.body.username, req.body.password);
+        await user.computeNewUser(User, req.body.username,
+                                        req.body.password,
+                                        req.body.email,
+                                        req.body.data_cadastro).catch(next);
         // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
         res.status(201).send();
     } catch (error) {
