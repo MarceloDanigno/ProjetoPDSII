@@ -1,0 +1,37 @@
+.container{
+  width: 250px;
+  height: max-content;
+  margin: auto;
+  background-color: darkorange;
+  padding: 20px 15px;
+  margin-top: 120px;
+  border-radius: 15px;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  margin-bottom: 10px;
+
+}
+
+.login-form{
+  padding: 10px;
+}
+.form-field{
+  display: inline-block;
+  padding-right: 45px;
+  margin-top: 5px;
+}
+
+.form-error{
+  display: block;
+  color: black;
+}
+
+.button{
+  width: 228px;
+  margin-top: 5px;
+  
+  
+}
