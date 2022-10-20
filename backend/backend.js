@@ -34,7 +34,7 @@ const mongoose = require('mongoose');
 
 if (local){
   mongoose.connect('mongodb://127.0.0.1:27017/projetopds').then(()=>{
-    console.log("Conectado ao MongoDB")
+    console.log("Conectado ao MongoDB em modo local")
   }).catch((err)=>{
     console.log("Houve um erro ao se conectar ao mongoDB: "+err)
   })
