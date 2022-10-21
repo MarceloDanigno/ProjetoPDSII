@@ -6,7 +6,9 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     username: { type: String,
                 required: true,
-                unique: false,},
+                unique: false},
+
+    //userID: { Schema.Types.ObjectId),
 
     password: { type: String,
                 required: true},
@@ -19,4 +21,20 @@ const userSchema = new mongoose.Schema({
                     required: false}
 });
 
-module.exports = { userSchema };
+const communitySchema = new mongoose.Schema({
+  nameCommunity: { type: String,
+              required: true,
+              unique: true},
+
+  descricaoCommunity: { type: String,
+                        required: false},
+
+
+
+  data_cadastro:{ type: String,
+                  required: false}
+
+
+})
+
+module.exports = { userSchema, communitySchema };
