@@ -6,24 +6,25 @@ var local = false;
 if (process.argv[2] == "-local"){
     local = true;
 }
-console.log(local)
-//teste 2022
 
+//importações
 const schemas = require("./src/schemas");
 const user = require("./src/user");
 const community = require("./src/community");
-const router = express.Router()
 
-const short = require('shortid');
+//manipular senhas
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // Inicializa Express para simplificar o código node.
-const express=require("express");
+const express = require('express');
 const app=express()
 
-
-const cors = require('cors');
 // CORS é requirido por utilizar arquivos de pastas diferentes mas todos no localhost
+const cors = require('cors');
 app.use(cors());
+
+//bodyParser permite interagir com o formulario
 const bodyParser = require('body-parser'); // body-parser para tratar forms no html
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Site de teste ficará na porta 3001 do localhost
 const port = 3001;
 app.use(express.static("test-site/")); // todo arquivo estático de site/ pode ser servido pelo servidor
+
 
 // Inicializa o Mongoose, para tratar os dados do MongoDB.
 const mongoose = require('mongoose');
@@ -54,10 +56,10 @@ if (local){
 // ---- DATABASE ----
 
 // Abre o banco de dados
-const db=mongoose.connection;
+const db = mongoose.connection;
 db.once('open', () =>{console.log("Sucesso na Conexão com o banco.");})
 
-// Models definem as "tabelas"
+// Models definem as "tabelas"                            nome da coleção no mongodb
 const User = mongoose.model('Users', schemas.userSchema, 'users');
 const Community = mongoose.model('Communities', schemas.communitySchema, 'community')
 
@@ -74,45 +76,59 @@ app.post("/register", async (req, res, next) => {
     // Roda a função de adicionar usuario e retorna erro se necessário
     try {
         console.log("[LOG] Usuario " + req.body.username + " sendo registrado.");
+
+        //Verifica no banco de dados se
         await user.computeNewUser(User, req.body.username,
-                                        req.body.userID,
                                         req.body.password,
                                         req.body.email,
                                         req.body.data_cadastro).catch(next);
         // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
-        res.status(201).send();
+        res.status(201).json({ msg: "Usuário cadastrado com sucesso!" });
+
     } catch (error) {
-        console.log("[ERRO] " + error);
+        console.error("[ERRO] " + error);
+
         // Manda resposta de sucesso -- Util mandar algo para mostrar para o cliente de oque deu errado -- fazer ifs para cada um que encontrar
-        res.status(500).send(JSON.stringify({code : 0, value : "username"}));
+    //    res.status(500).send(JSON.stringify({code : 0, value : "username"}));
+        res.stats(500).json({ msg: "deu ruim"})
     }
 });
 
-//Tentativa para cadastro de comunidades
-router.get("/community", (req, res) =>{
-  res.render("teste-site/community")
-})
+//Autenticação de login
+app.post("/login", async (req, res) =>{
 
-app.post("/commu", async (req, res, next) => {
+  const {email, password} = req.body
 
-    // Roda a função de adicionar usuario e retorna erro se necessário
-  //  try {
-        console.log("[LOG] Comunidade " + req.body.nameCommunity + " sendo registrada.");
-      //  await community.computeNewCommunity(Community, req.body.nameCommunity,
-          //                              req.body.descricaoCommunity,
-                //                        req.body.data_cadastro).catch(next);
+  if (pass[0]  == "" & email == ""){
+    res.stats(420).json({ msg: "Campo não preenchido"})}
 
-      //  res.status(201).send();
-  //  } catch (error) {
-  //      console.log("[ERRO] " + error);
-       // Manda resposta de sucesso -- Util mandar algo para mostrar para o cliente de oque deu errado -- fazer ifs para cada um que encontrar
-  //      res.status(500).send(JSON.stringify({code : 0, value : "nameCommunity"}));
-  //  }
+  if (pass[0] === "") {
+      res.stats(421).json({ msg: "Senha não informada"})}
+
+  if (email == ""){
+      res.stats(421).json({ msg: "Email não informado." });}
+
+  //Verificar se existe no banco de dados
+  const userExists = await User.findOne({email: email})
+  if(!userExists){
+     throw "Email não consta no banco de dados"
+  }
+
+  try {
+    console.log("[LOG] Email " + req.body.email + " sendo verificado.");
+
+  await user.checkUser(User, req.body.password,
+                             req.body.email)
+  res.status(201).json({ msg: "Usuário cadastrado com sucesso!" });
+
+  } catch (error) {
+      console.error("[ERRO] " + error);
+      res.stats(500).json({ msg: "deu ruim"})
+  }
+
 });
 
-
-
-
+//Redirecionamento para a tela de inicial
 
 // Código fica escutando
 app.listen(port, ()=>{console.log("Escutando na porta " + port + "!")});

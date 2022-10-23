@@ -22,18 +22,20 @@ const userSchema = new mongoose.Schema({
 });
 
 const communitySchema = new mongoose.Schema({
-  nameCommunity: { type: String,
+  nameCommunity: {
+              type: String,
               required: true,
-              unique: true},
+              unique: true
+  },
 
-  descricaoCommunity: { type: String,
-                        required: false},
+  descricaoCommunity: {
+              type: String,
+              required: false
+  },
 
-
-
-  data_cadastro:{ type: String,
-                  required: false}
-
+  data_cadastro:{
+              type: String,
+              required: false}
 
 })
 

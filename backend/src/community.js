@@ -1,7 +1,7 @@
 // Inicializa o modulo de criptografia para senhas e o mongoose.
 const argon2 = require('argon2');
 const mongoose = require('mongoose');
-const router = express.Router()
+
 
 
 
