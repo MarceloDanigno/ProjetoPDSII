@@ -2,7 +2,6 @@
 
 // Testa a linha de comando para ver se será realizado conexão local ou remota
 var local = false;
-
 if (process.argv[2] == "-local"){
     local = true;
 }
@@ -11,7 +10,7 @@ if (process.argv[2] == "-local"){
 const schemas = require("./src/schemas");
 const user = require("./src/user");
 const community = require("./src/community");
-
+const admin = require("./routes/admin")
 //manipular senhas
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -33,7 +32,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3001;
 app.use(express.static("test-site/")); // todo arquivo estático de site/ pode ser servido pelo servidor
 
-
 // Inicializa o Mongoose, para tratar os dados do MongoDB.
 const mongoose = require('mongoose');
 
@@ -53,6 +51,7 @@ if (local){
   })
 }
 
+
 // ---- DATABASE ----
 
 // Abre o banco de dados
@@ -62,6 +61,11 @@ db.once('open', () =>{console.log("Sucesso na Conexão com o banco.");})
 // Models definem as "tabelas"                            nome da coleção no mongodb
 const User = mongoose.model('Users', schemas.userSchema, 'users');
 const Community = mongoose.model('Communities', schemas.communitySchema, 'community')
+
+
+
+
+
 
 // ---- BACKEND FUNCTIONS ----
 
@@ -94,39 +98,8 @@ app.post("/register", async (req, res, next) => {
     }
 });
 
-//Autenticação de login
-app.post("/login", async (req, res) =>{
-
-  const {email, password} = req.body
-
-  if (pass[0]  == "" & email == ""){
-    res.stats(420).json({ msg: "Campo não preenchido"})}
-
-  if (pass[0] === "") {
-      res.stats(421).json({ msg: "Senha não informada"})}
-
-  if (email == ""){
-      res.stats(421).json({ msg: "Email não informado." });}
-
-  //Verificar se existe no banco de dados
-  const userExists = await User.findOne({email: email})
-  if(!userExists){
-     throw "Email não consta no banco de dados"
-  }
-
-  try {
-    console.log("[LOG] Email " + req.body.email + " sendo verificado.");
-
-  await user.checkUser(User, req.body.password,
-                             req.body.email)
-  res.status(201).json({ msg: "Usuário cadastrado com sucesso!" });
-
-  } catch (error) {
-      console.error("[ERRO] " + error);
-      res.stats(500).json({ msg: "deu ruim"})
-  }
-
-});
+//Rotas
+app.use('/admin',admin);
 
 //Redirecionamento para a tela de inicial
 
