@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 
 // Função para adicionar um novo usuario no modelo User
 async function computeNewUser(User, name, pass, email, data_cadastro, log = true) {
-    console.log(pass)
 
     // Erros de preenchimento
     if (pass[0]  == "" & name  == "" & email == ""){
@@ -48,9 +47,13 @@ async function computeNewUser(User, name, pass, email, data_cadastro, log = true
 }
 
 // Função para validar login -- Retorna true se passwords batem e false se não.
-async function checkUser(name, pass, User) {
+async function checkUser(User, email, pass) {
+
     // Pega o usuario (1 já que email é unico) e testa a senha
     const userQuery = await User.find({ email : email }).limit(1);
+    console.log(pass)
+    console.log(userQuery[0].password)
+
     return await argon2.verify(userQuery[0].password, pass);
 }
 

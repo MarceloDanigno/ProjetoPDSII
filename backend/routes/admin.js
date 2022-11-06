@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-router.post("/login", async (req, res) =>{
+router.get("/login", async (req, res) => {
   res.render('login', {});
   const {email, password} = req.body
 

@@ -14,7 +14,7 @@ const admin = require("./routes/admin")
 //manipular senhas
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-
+const path = require('path')
 // Inicializa Express para simplificar o código node.
 const express = require('express');
 const app=express()
@@ -98,8 +98,30 @@ app.post("/register", async (req, res, next) => {
     }
 });
 
+app.get("/login", async (req, res) => {
+  console.log("Entrou na tela de login")
+  res.sendFile(path.join(__dirname + '/test-site/login.html'))
+  });
+
+
+app.post("/auth", async (req, res, next)=> {
+  console.log("auth?")
+   try {
+      console.log("[LOG] " + req.body.email + " sendo validado.");
+
+      //Verifica no banco de dados se
+      await user.checkUser(User, req.body.email,req.body.password)
+      // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
+      res.status(201).json({ msg: "Usuário logado com sucesso!" });
+
+  } catch (error) {
+      console.error("[ERRO] " + error);
+      res.stats(500).json({ msg: "deu ruim"})
+  }
+});
+
 //Rotas
-app.use('/admin',admin);
+//app.use('/admin',admin);
 
 //Redirecionamento para a tela de inicial
 
