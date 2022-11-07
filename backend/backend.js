@@ -110,13 +110,15 @@ app.post("/auth", async (req, res, next)=> {
       console.log("[LOG] " + req.body.email + " sendo validado.");
 
       //Verifica no banco de dados se
-      await user.checkUser(User, req.body.email,req.body.password)
+      if (user.checkUser(User, req.body.email,req.body.password)){
+          res.status(201).json({ msg: "Usuário logado com sucesso!" });
+      } else{
+          res.status(500).json({ msg: "deu ruim"})
+      }
       // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
-      res.status(201).json({ msg: "Usuário logado com sucesso!" });
-
   } catch (error) {
       console.error("[ERRO] " + error);
-      res.stats(500).json({ msg: "deu ruim"})
+      res.status(500).json({ msg: "deu ruim"})
   }
 });
 

@@ -52,7 +52,7 @@ async function checkUser(User, email, pass) {
     // Pega o usuario (1 já que email é unico) e testa a senha
     const userQuery = await User.find({ email : email }).limit(1);
     console.log(pass)
-    console.log(userQuery[0].password)
+  //  console.log(userQuery[0].pass)
 
     return await argon2.verify(userQuery[0].password, pass);
 }
