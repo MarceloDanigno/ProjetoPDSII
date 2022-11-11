@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">projetopdsfrontend</string>
-    <string name="title_activity_main">projetopdsfrontend</string>
-    <string name="package_name">com.example.app</string>
-    <string name="custom_url_scheme">com.example.app</string>
+    <string name="app_name">Needit</string>
+    <string name="title_activity_main">Needit</string>
+    <string name="package_name">com.needit.app</string>
+    <string name="custom_url_scheme">com.needit.app</string>
 </resources>
