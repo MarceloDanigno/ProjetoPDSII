@@ -4,9 +4,23 @@ export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState ('');
 
+    async function postData(url = '', data = {}) {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        return response.json();
+      }
+
 const handleSubmit = (ev) => {
     ev.preventDefault();
-    console.log(email);
+    postData('HTTP://localhost:3001/login', { email: email, password: password })
+        .then((data) => {
+            console.log(data);
+        });        
 
 }
 
