@@ -11,10 +11,11 @@ const schemas = require("./src/schemas");
 const user = require("./src/user");
 const community = require("./src/community");
 const admin = require("./routes/admin")
+const handlebars = require('express-handlebars')
+
 //manipular senhas
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const path = require('path')
+
 // Inicializa Express para simplificar o código node.
 const express = require('express');
 const app=express()
@@ -34,6 +35,7 @@ app.use(express.static("test-site/")); // todo arquivo estático de site/ pode s
 
 // Inicializa o Mongoose, para tratar os dados do MongoDB.
 const mongoose = require('mongoose');
+const { post } = require("./routes/admin");
 
 if (local){
   mongoose.connect('mongodb://127.0.0.1:27017/projetopds').then(()=>{
@@ -65,8 +67,6 @@ const Community = mongoose.model('Communities', schemas.communitySchema, 'commun
 
 
 
-
-
 // ---- BACKEND FUNCTIONS ----
 
 // Ação para quando o usuário conectar na porta do localhost --> retorna a página
@@ -83,11 +83,13 @@ app.post("/register", async (req, res, next) => {
 
         //Verifica no banco de dados se
         await user.computeNewUser(User, req.body.username,
-                                        req.body.password,
+                                        req.body.password, 
+                                        req.body.password2,                                    
                                         req.body.email,
                                         req.body.data_cadastro).catch(next);
         // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
-        res.status(201).json({ msg: "Usuário cadastrado com sucesso!" });
+       //res.status(201).json({ msg: "Usuário cadastrado com sucesso!" });
+       res.sendFile(path.join(__dirname + '/test-site/login.html'))
 
     } catch (error) {
         console.error("[ERRO] " + error);
@@ -104,23 +106,51 @@ app.get("/login", async (req, res) => {
   });
 
 
-app.post("/auth", async (req, res, next)=> {
-  console.log("auth?")
+app.post("/auth", async (req, res, next)=> {  
    try {
       console.log("[LOG] " + req.body.email + " sendo validado.");
 
       //Verifica no banco de dados se
-      if (user.checkUser(User, req.body.email,req.body.password)){
+      user.checkUser(User, req.body.email,req.body.password).then((result) => {         
+        if(result){
           res.status(201).json({ msg: "Usuário logado com sucesso!" });
-      } else{
+        }
+        else{
           res.status(500).json({ msg: "deu ruim"})
-      }
-      // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
+        }
+
+
+})
+        
+
+ // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
   } catch (error) {
       console.error("[ERRO] " + error);
       res.status(500).json({ msg: "deu ruim"})
   }
 });
+
+
+/*app.get("/community", async (req, res) => {
+  try {    
+    await community.computeNewCommunity(Community, req.body.nameCommunity,
+                                    req.body.descricaoCommunity,
+                                    req.body.data_cadastro).catch(next);    
+   
+    res.sendFile(path.join(__dirname + '/test-site/community.html'))
+  }
+  });
+
+
+app.get("/commuList", function(req, res){
+  community.all().then(function (comunidades){
+    res.render('community', {comunidades: comunidades})   
+  })
+
+})
+*/
+//community.find().then(nameCommunity => console.log(users)))
+  
 
 //Rotas
 //app.use('/admin',admin);

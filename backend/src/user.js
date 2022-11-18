@@ -3,15 +3,23 @@ const argon2 = require('argon2');
 const mongoose = require('mongoose');
 //const router = express.Router()
 
-// Função para adicionar um novo usuario no modelo User
-async function computeNewUser(User, name, pass, email, data_cadastro, log = true) {
+const hashingConfig = { // based on OWASP cheat sheet recommendations (as of March, 2022)
+    parallelism: 1,
+    memoryCost: 64000, // 64 mb
+    timeCost: 3 // number of itetations
+}
 
+
+
+// Função para adicionar um novo usuario no modelo User
+async function computeNewUser(User, name, pass1, pass2, email, data_cadastro, log = true) {
+    console.log(pass1)
     // Erros de preenchimento
-    if (pass[0]  == "" & name  == "" & email == ""){
+    if (pass1[0]  == "" & name  == "" & email == ""){
       throw "Campos vazios.";
     }
 
-    if (pass[0] === "") {
+    if (pass1[0] === "") {
         throw "Campo de senha vazio.";
     }
 
@@ -22,7 +30,7 @@ async function computeNewUser(User, name, pass, email, data_cadastro, log = true
     if (email == ""){
         throw "Email não informado.";
     }
-    if (pass[0] != pass[1]){
+    if (pass1!= pass2){
         throw "Senha não confere."
     }
 
@@ -32,7 +40,7 @@ async function computeNewUser(User, name, pass, email, data_cadastro, log = true
        throw "Email já cadastrado"
     }
     // Por enquanto username é unico, mas recomendo criar um ID aqui para várias pessoas poderem usar o mesmo nome. Tipo o Discord.
-    let hashedPass = await argon2.hash(pass);
+    let hashedPass = await argon2.hash(pass1);
     let newUser = new User({
                       username : name,
                       password : hashedPass,
@@ -47,14 +55,21 @@ async function computeNewUser(User, name, pass, email, data_cadastro, log = true
 }
 
 // Função para validar login -- Retorna true se passwords batem e false se não.
-async function checkUser(User, email, pass) {
-
+async function checkUser(User, email, pass1) {
     // Pega o usuario (1 já que email é unico) e testa a senha
     const userQuery = await User.find({ email : email }).limit(1);
-    console.log(pass)
-  //  console.log(userQuery[0].pass)
 
-    return await argon2.verify(userQuery[0].password, pass);
+    const  correct = await argon2.verify(userQuery[0].password, pass1)
+    
+    if(correct){
+        return true;
+    } else {
+        return false;
+    } 
+   
 }
+
+
+
 
 module.exports = { computeNewUser , checkUser };
