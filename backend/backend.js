@@ -113,15 +113,16 @@ app.post("/auth", async (req, res, next)=> {
       //Verifica no banco de dados se
       user.checkUser(User, req.body.email,req.body.password).then((result) => {         
         if(result){
+          console.log("[LOG] Usuário entrou com sucesso.");
           res.status(201).json({ msg: "Usuário logado com sucesso!" });
         }
         else{
+          console.log("[LOG] Autenticação falhou!");
           res.status(500).json({ msg: "deu ruim"})
         }
 
 
 })
-        
 
  // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
   } catch (error) {
@@ -131,31 +132,84 @@ app.post("/auth", async (req, res, next)=> {
 });
 
 
-/*app.get("/community", async (req, res) => {
-  try {    
+app.post("/community", async (req, res) => {
+  try {
+    await community.computeNewCommunity(Community, req.body.nameCommunity,
+                                    req.body.descricaoCommunity).catch(next);
+
+    res.status(201).json({ msg: "comunidade criada com sucesso!" });
+    
+  } catch (error) {
+    console.error("[ERRO] " + error);
+    res.status(500).json({ msg: "deu ruim"})
+  }
+});
+
+app.post("/communityWithPosts", async (req, res) => {
+  try {
     await community.computeNewCommunity(Community, req.body.nameCommunity,
                                     req.body.descricaoCommunity,
-                                    req.body.data_cadastro).catch(next);    
-   
-    res.sendFile(path.join(__dirname + '/test-site/community.html'))
+                                    req.body.posts).catch(next);
+
+    res.status(201).json({ msg: "comunidade criada com sucesso!" });
+    
+  } catch (error) {
+    console.error("[ERRO] " + error);
+    res.status(500).json({ msg: "deu ruim"})
   }
-  });
+});
+
+app.all("/debugFillCommunities", async (req, res) => {
+  try {
+    let comm1 = {nameCommunity:"News", descricaoCommunity: "Nóticias do Brasil aqui!",
+                 posts:`[{postAuthor: "Marcelo", postTitle: "Variante Omicron XBB.1.5 detectada na India", postDesc: "https://www.cnn.com/2023/01/01/americas/brazil-lula-da-silva-inauguration-intl/index.html",
+                         postComments: [], postKarma: 8000, postData: new Date()},
+                         {postAuthor: "Andrew", postTitle: "Kim Jonh Un declara aumentar seu arsenal nucelar", postDesc: "https://www.theguardian.com/world/2023/jan/01/brazil-lula-presidency-new-era",
+                         postComments: [], postKarma: 6000, postData: new Date(new Date().setHours(new Date().getHours() + 2))},
+                         {postAuthor: "Jordan", postTitle: "640 carros incediados na França durante festas de Ano Novo", postDesc: "https://au.news.yahoo.com/france-says-690-cars-torched-133317204.html",
+                         postComments: [], postKarma: 10000, postData: new Date(new Date().setHours(new Date().getHours() + 8))}]`}
+    let comm2 = {nameCommunity:"Ask", descricaoCommunity: "Alguma Pergunta?",
+                 posts:`[{postAuthor: "Marcelo", postTitle: "Que coisa pequena te irrita?", postDesc: "Eu pessoalmente não gosto de sorvete muito sólido, fica ruim de comer. :(",
+                         postComments: [], postKarma: 600, postData: new Date(new Date().setHours(new Date().getHours() + 1))},
+                         {postAuthor: "Andrew", postTitle: "Qual melhor filme ou série animada que você já assistiu?", postDesc: "Ex: A Viagem de Chihiro",
+                         postComments: [], postKarma: 12000, postData: new Date(new Date().setHours(new Date().getHours() + 4))},
+                         {postAuthor: "Jordan", postTitle: "Como você toma seu café?", postDesc: "Só para saber...",
+                         postComments: [], postKarma: 5000, postData: new Date(new Date().setHours(new Date().getHours() + 9))}]`}
+    let comm3 = {nameCommunity:"Games", descricaoCommunity: "Tude de novo sobre Jogos",
+                 posts:`[{postAuthor: "Marcelo", postTitle: "Konami dá nóticias sobre desenvolvimento de série notória", postDesc: "https://www.gematsu.com/2022/12/konami-teases-new-developments-for-familiar-series-and-unannounced-new-projects-in-the-works",
+                         postComments: [], postKarma: 5500, postData: new Date(new Date().setHours(new Date().getHours() + 13))},
+                         {postAuthor: "Andrew", postTitle: "A história do Dragon Age", postDesc: "https://youtu.be/sdpLGPb8Bg8",
+                         postComments: [], postKarma: 8200, postData: new Date(new Date().setHours(new Date().getHours() + 5))},
+                         {postAuthor: "Jordan", postTitle: "Factorio atinge 3.5 milhões de vendas", postDesc: "https://www.factorio.com/blog/post/fff-372",
+                         postComments: [], postKarma: 500, postData: new Date(new Date().setHours(new Date().getHours() + 23))}]`}
+    
+    await community.computeNewCommunity(Community, comm1.nameCommunity,
+                                    comm1.descricaoCommunity,
+                                    comm1.posts);
+
+    await community.computeNewCommunity(Community, comm2.nameCommunity,
+                                comm2.descricaoCommunity,
+                                comm2.posts);
+
+    await community.computeNewCommunity(Community, comm3.nameCommunity,
+                            comm3.descricaoCommunity,
+                            comm3.posts);
+
+    console.log("[DEBUG] Comunidades adicionadas!");
+    
+  } catch (error) {
+    console.error("[ERRO] " + error);
+    res.status(500).json({ msg: "deu ruim"})
+  }
+});
 
 
 app.get("/commuList", function(req, res){
-  community.all().then(function (comunidades){
-    res.render('community', {comunidades: comunidades})   
+  console.log("[LOG] Enviando comunidades...");
+  Community.find().then((result) => {
+    res.status(201).json(result); 
   })
-
 })
-*/
-//community.find().then(nameCommunity => console.log(users)))
-  
-
-//Rotas
-//app.use('/admin',admin);
-
-//Redirecionamento para a tela de inicial
 
 // Código fica escutando
 app.listen(port, ()=>{console.log("Escutando na porta " + port + "!")});

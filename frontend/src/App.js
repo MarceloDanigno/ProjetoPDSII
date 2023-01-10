@@ -3,18 +3,23 @@ import logo from './logo.svg';
 import './App.css';
 import { Login } from "./Login";
 import { Register } from "./Register";
+import { Homepage } from "./Homepage";
 
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
+  let [currentForm, setCurrentForm] = useState('Homepage');
+  console.log(currentForm);
   const toggleForm = (formName) =>  {
-    setCurrentForm (formName);
+    setCurrentForm(formName);
+    currentForm = formName;
   }
+
 
   return (
     <div className="App">
     {
-      currentForm === "login" ? <Login onFormSwitch = {toggleForm} /> : <Register onFormSwitch = {toggleForm}/>
+      currentForm === "Homepage" ? <Homepage onFormSwitch = {toggleForm} /> : 
+      (currentForm === "login" ? <Login onFormSwitch = {toggleForm} /> : <Register onFormSwitch = {toggleForm}/>)
     }
     </div>
   );

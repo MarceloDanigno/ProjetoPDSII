@@ -17,7 +17,7 @@ export const Login = (props) => {
 
 const handleSubmit = (ev) => {
     ev.preventDefault();
-    postData('HTTP://localhost:3001/login', { email: email, password: password })
+    postData('HTTP://localhost:3001/auth', { email: email, password: password })
         .then((data) => {
             console.log(data);
         });        

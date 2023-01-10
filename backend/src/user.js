@@ -13,7 +13,6 @@ const hashingConfig = { // based on OWASP cheat sheet recommendations (as of Mar
 
 // Função para adicionar um novo usuario no modelo User
 async function computeNewUser(User, name, pass1, pass2, email, data_cadastro, log = true) {
-    console.log(pass1)
     // Erros de preenchimento
     if (pass1[0]  == "" & name  == "" & email == ""){
       throw "Campos vazios.";
@@ -30,9 +29,9 @@ async function computeNewUser(User, name, pass1, pass2, email, data_cadastro, lo
     if (email == ""){
         throw "Email não informado.";
     }
-    if (pass1!= pass2){
-        throw "Senha não confere."
-    }
+    //if (pass1!= pass2){
+    //    throw "Senha não confere."
+    //}
 
     //Erros de dados já existentes (email)
     const userExists = await User.findOne({email: email})
@@ -50,7 +49,7 @@ async function computeNewUser(User, name, pass1, pass2, email, data_cadastro, lo
 
     await newUser.save();
 
-    if (log) {console.log("[LOG] Entries added to DB.");
+    if (log) {console.log("[LOG] Usuário adicionado no DB.");
     };
 }
 
