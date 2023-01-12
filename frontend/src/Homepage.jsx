@@ -68,7 +68,7 @@ export const Homepage = (props) => {
 
     return (
         <div className="homepage-container">
-            <h2>Homepage</h2>
+            <h2>HeadIt</h2>
             <button className="link-btn" onClick={() => props.onFormSwitch('login')}> Login </button>
             <div className="homepage-container_post-history">
                 {content}
