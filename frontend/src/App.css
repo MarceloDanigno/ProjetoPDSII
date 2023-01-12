@@ -29,13 +29,13 @@ html {
 .homepage-container {
   display: flex;
   flex-direction: column;
-  background-color: #404040;
+  background: rgba(255, 255, 255, 0);
   width: 70%;
   padding: 5%;
 }
 
 .homepage-post {
-  background-color: #505050;
+  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 20px;
@@ -80,7 +80,7 @@ button {
   width: 100px;
   padding: 5px 0;
   box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
-  background-color: rgba(104, 85, 224, 1);
+  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
   transition: 0.4s;
 }
 
