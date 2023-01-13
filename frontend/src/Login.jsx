@@ -37,17 +37,17 @@ export const Login = (props) => {
                 <label htmlFor="password"> Senha </label>
                 <input value={password} onChange={(ev) => setPassword(ev.target.value)} type="password" placeholder="Digite sua senha" id="password" name="password" />
 
-                <div class="button" display="inline">
+                <div>
 
-                    <button type="submit" >Login</button>
+                    <button className="button-lgn2" type="submit" >Login</button>
+                    <button className="button-cad2" onClick={() => props.onFormSwitch('register')}> Deseja se cadastrar?<br></br>Clique aqui </button>
 
-                    <button type="submit" >Home</button>
 
                 </div>
 
 
             </form>
-            <button className="button-cad" onClick={() => props.onFormSwitch('register')}> Deseja se cadastrar?<br></br>Clique aqui </button>
+
         </div>
     )
 } 

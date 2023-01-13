@@ -79,7 +79,11 @@ export const Homepage = (props) => {
                     margin-right="auto"
                 />
             </div>
-            <button className="button-lgn" onClick={() => props.onFormSwitch('login')}> Login </button>
+            <div>
+                <button className="button-home" onClick={() => props.onFormSwitch('home')}> Home </button>
+                <button className="button-lgn" onClick={() => props.onFormSwitch('login')}> Login </button>
+                <button className="button-reg" onClick={() => props.onFormSwitch('register')}>Registrar </button>
+            </div>
             <div className="homepage-container_post-history">
                 {content}
             </div>
