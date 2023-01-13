@@ -36,11 +36,18 @@ export const Login = (props) => {
                 <input value={email} onChange={(ev) => setEmail(ev.target.value)} type="email" placeholder="Digite seu email" id="email" name="email" />
                 <label htmlFor="password"> Senha </label>
                 <input value={password} onChange={(ev) => setPassword(ev.target.value)} type="password" placeholder="Digite sua senha" id="password" name="password" />
-                <div class="button">
+
+                <div class="button" display="inline">
+
                     <button type="submit" >Login</button>
+
+                    <button type="submit" >Home</button>
+
                 </div>
+
+
             </form>
-            <button className="cad" onClick={() => props.onFormSwitch('register')}> Deseja se cadastrar? Clique aqui. </button>
+            <button className="button-cad" onClick={() => props.onFormSwitch('register')}> Deseja se cadastrar?<br></br>Clique aqui </button>
         </div>
     )
 } 

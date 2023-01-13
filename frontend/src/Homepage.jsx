@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import logo from './headit.png';
 
 export const Homepage = (props) => {
     const [email, setEmail] = useState('');
@@ -58,7 +59,7 @@ export const Homepage = (props) => {
                 <div style={{ backgroundImage: 'url(backgroundHome.png)' }}></div>
                 <h3> {props.community} </h3>
                 <h2> {props.title} por {props.author} em {props.date} </h2>
-                <p> {props.description} </p>
+                <p1> {props.description} </p1>
                 <p className="homepage-post_karma">  {props.karma} </p>
             </div>
         );
@@ -68,8 +69,17 @@ export const Homepage = (props) => {
 
     return (
         <div className="homepage-container">
-            <h2>HeadIt</h2>
-            <button className="link-btn" onClick={() => props.onFormSwitch('login')}> Login </button>
+
+            <div className="logo">
+                <img src={logo} alt="logo"
+                    width="100"
+                    height="100"
+                    margin="0 50px"
+                    margin-left="auto"
+                    margin-right="auto"
+                />
+            </div>
+            <button className="button-lgn" onClick={() => props.onFormSwitch('login')}> Login </button>
             <div className="homepage-container_post-history">
                 {content}
             </div>

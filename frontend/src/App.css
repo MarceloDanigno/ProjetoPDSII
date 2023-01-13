@@ -24,13 +24,14 @@ html {
 .register-form {
   display: flex;
   flex-direction: column;
+  padding: 5%
 }
 
 .homepage-container {
   display: flex;
   flex-direction: column;
   background: rgba(255, 0, 0, 0);
-  width: 70%;
+  width: 90%;
   padding: 5%;
 }
 
@@ -42,10 +43,21 @@ html {
   padding-right: 20px;
   margin: 15px;
   border-radius: 15px;
+
+  text-align: justify;
+  font-size: 8px;
+}
+
+.p1 {
+
+  text-align: justify;
+  font-size: 3px;
+
 }
 
 .homepage-post_karma {
   color: cyan;
+
 }
 
 @media screen and (min-width: 600px) {
@@ -54,6 +66,7 @@ html {
     border: 1px solid white;
     border-radius: 10px;
     margin: 0.5rem;
+
   }
 }
 
@@ -69,9 +82,11 @@ input {
   border-radius: 10px;
 }
 
+
 button {
   color: #ffffff;
   border: 0;
+  vertical-align: middle;
   border-radius: 10px;
   font-weight: 600;
   margin: 0 50px;
@@ -84,25 +99,32 @@ button {
   transition: 0.4s;
 }
 
-.cad {
-  border-radius: 10px;
-  margin: 0 50px;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 250px;
+#button li {
+  display: inline;
+}
 
-  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
-  transition: 0.4s;
+.button-reg2 {
+  font-size: 10px;
 
 }
 
+.button-cad {
+  font-size: 9px;
+}
+
+
+
 .logo {
-  border-radius: 10px;
+  border-radius: 0px;
   margin: 0 50px;
   margin-top: 10px;
+  margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
-  width: 250px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
 
 }
