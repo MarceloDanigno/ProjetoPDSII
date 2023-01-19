@@ -92,7 +92,7 @@ button {
 
   padding: 5px 0;
   box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
-  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+  background: linear-gradient(90deg, #fe451b 0%, #daae51 100%);
   transition: 0.4s;
 
 
@@ -116,25 +116,24 @@ button {
 
 
 .button-lgn {
-  font-size: 20px;
-  margin-right: 5px;
+  font-size: 10px;
+  margin-right: 2px;
   width: 80px;
 
 }
 
 .button-lgn2 {
   margin-top: 10px;
-  font-size: 15px;
-  margin-right: 5px;
+  font-size: 18px;
   width: 90px;
-  font-size: 30px;
+
 
 }
 
 .button-reg {
-  background: linear-gradient(90deg, #daae51 0%, #d53369 100%);
-  font-size: 20px;
-  margin-right: 5px;
+  background: linear-gradient(90deg, #fe451b 0%, #daae51 100%);
+  font-size: 10px;
+
   width: 80px;
 }
 
@@ -144,16 +143,14 @@ button {
   margin-right: auto;
   margin-left: auto;
   padding: 2px;
-
-  font-size: 30px;
+  font-size: 18px;
 }
 
 .button-reg2 {
 
   background: linear-gradient(90deg, #daae51 0%, #d53369 100%);
-  font-size: 15px;
-  width: 215px;
-
+  font-size: 10px;
+  width: 50%;
   margin-right: auto;
   margin-left: auto;
 
@@ -170,12 +167,32 @@ button {
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
-
-
-  font-size: 15px;
-  width: 215px;
+  width: 80%;
 
 }
+
+.barrinha {
+  position: relative;
+  right: 25%;
+
+}
+
+.All {
+  font-size: 9px;
+  padding: 2px;
+
+}
+
+.Following {
+  font-size: 9px;
+  padding: 2px;
+
+}
+
+
+
+
+
 
 .logo {
   border-radius: 0px;
@@ -197,14 +214,15 @@ button {
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  height: 70px;
-  width: auto;
+  height: 65px;
   padding: 5px;
   justify-content: space-between;
   background: #ff451b;
   position: fixed;
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
+  border: 3px inset rgb(255, 255, 255);
 
 }
 
@@ -212,35 +230,15 @@ button {
 
   display: flex;
   align-items: center;
+
   border: 0px solid #ccc;
+
 
 }
 
 .menu ul {
+  position: relative;
+
+  right: 10%;
   justify-content: space-between;
-}
-
-#btn-mobile {
-  display: block;
-
-
-}
-
-@media(max-width: 400x) {
-  #btn-mobile {
-    display: block;
-  }
-
-  #menu {
-    /* display: none;*/
-    position: absolute;
-    width: 100%;
-    top: 70px;
-    right: 0px;
-
-  }
-
-  #nav.active #menu {
-    display: flex;
-  }
 }

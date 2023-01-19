@@ -29,7 +29,7 @@ export const Login = (props) => {
         <div className="auth-form-container">
 
             <button className="logologin" onClick={() => props.onFormSwitch('Homepage')}>
-                <img src={logo} width="150" height="150" />
+                <img src={logo} width="120" height="120" />
             </button>
 
             <form className="login-form" onSubmit={handleSubmit} >

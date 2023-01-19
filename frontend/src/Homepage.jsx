@@ -74,6 +74,16 @@ export const Homepage = (props) => {
                 <button className="logbar" onClick={() => props.onFormSwitch('Homepage')}>
                     <img src={logo} width="60" height="60" />
                 </button>
+                <div className="barrinha">
+                    <div>
+                        <button className="All">ALL</button>
+                    </div>
+
+                    <div>
+                        <button className="Following">Following</button>
+                    </div>
+
+                </div>
 
                 <div className="menu">
                     <ul>

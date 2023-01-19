@@ -29,9 +29,8 @@ export const Register = (props) => {
     return (
         <div className="auth-form-container">
             <button className="logologin" onClick={() => props.onFormSwitch('Homepage')}>
-                <img src={logo} width="150" height="150" />
+                <img src={logo} width="120" height="120" />
             </button>
-            <h2>Registro</h2>
             <form className="register-form" onSubmit={handleSubmit}>
                 <label htmlFor="username" > Nome de usuário </label>
                 <input value={username} onChange={(ev) => setUsername(ev.target.value)} username="username" id="username" placeholder="Digite um nome de usuário" />
