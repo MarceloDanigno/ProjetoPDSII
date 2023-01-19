@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import logo from './logo.svg';
 import './App.css';
 import { Login } from "./Login";
@@ -11,7 +11,7 @@ import { Homepage } from "./Homepage";
 function App() {
   let [currentForm, setCurrentForm] = useState('Homepage');
   console.log(currentForm);
-  const toggleForm = (formName) =>  {
+  const toggleForm = (formName) => {
     setCurrentForm(formName);
     currentForm = formName;
   }
@@ -19,18 +19,22 @@ function App() {
 
   return (
     <div className="App">
-      <Helmet>    
-          <meta charSet="utf-8" />
-          <title>HeadIt</title>
-          <link rel="canonical" href="http://mysite.com/example" />
-          <meta name="description" content="Name Change" />
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>HeadIt</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+        <meta name="description" content="Name Change" />
       </Helmet>
-    {
-      currentForm === "Homepage" ? <Homepage onFormSwitch = {toggleForm} /> : 
-      (currentForm === "login" ? <Login onFormSwitch = {toggleForm} /> : <Register onFormSwitch = {toggleForm}/>)
-    }
+      {
+        currentForm === "Homepage" ? <Homepage onFormSwitch={toggleForm} /> :
+          (currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />)
+      }
     </div>
   );
 }
+
+
+
+
 
 export default App;

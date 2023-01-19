@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from './headit.png';
 
+
 export const Homepage = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -68,26 +69,29 @@ export const Homepage = (props) => {
     useEffect(() => { handleSubmit(); });
 
     return (
-        <div className="homepage-container">
+        <div>
+            <header id="header">
+                <button className="logbar" onClick={() => props.onFormSwitch('Homepage')}>
+                    <img src={logo} width="60" height="60" />
+                </button>
 
-            <div className="logo">
-                <img src={logo} alt="logo"
-                    width="100"
-                    height="100"
-                    margin="0 50px"
-                    margin-left="auto"
-                    margin-right="auto"
-                />
-            </div>
-            <div>
-                <button className="button-home" onClick={() => props.onFormSwitch('home')}> Home </button>
-                <button className="button-lgn" onClick={() => props.onFormSwitch('login')}> Login </button>
-                <button className="button-reg" onClick={() => props.onFormSwitch('register')}>Registrar </button>
-            </div>
-            <div className="homepage-container_post-history">
-                {content}
-            </div>
+                <div className="menu">
+                    <ul>
+                        <button className="button-lgn" onClick={() => props.onFormSwitch('login')}> Login </button>
 
+                        <button className="button-reg" onClick={() => props.onFormSwitch('register')}>Registrar </button>
+
+                    </ul>
+                </div>
+
+            </header>
+
+            <div className="homepage-container">
+
+                <div className="homepage-container_post-history">{content}</div>
+
+            </div>
         </div>
     )
-} 
+}
+

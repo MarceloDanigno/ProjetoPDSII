@@ -27,9 +27,10 @@ export const Login = (props) => {
 
     return (
         <div className="auth-form-container">
-            <div className="logo">
-                <img src={logo} alt="logo" width="100" height="100" margin="0 50px" margin-left="auto" margin-right="auto" />
-            </div>
+
+            <button className="logologin" onClick={() => props.onFormSwitch('Homepage')}>
+                <img src={logo} width="150" height="150" />
+            </button>
 
             <form className="login-form" onSubmit={handleSubmit} >
                 <label htmlFor="email"> Email </label>

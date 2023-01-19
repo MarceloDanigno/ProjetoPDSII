@@ -89,7 +89,7 @@ button {
   border-radius: 10px;
   font-weight: 600;
   font-size: 15px;
-  width: 80px;
+
   padding: 5px 0;
   box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
   background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
@@ -98,17 +98,27 @@ button {
 
 }
 
-.button-home {
-  font-size: 15px;
+.logbar {
+  background: none;
   margin-right: 85px;
-  margin-left: 5px;
+  margin-left: 15px;
+}
+
+.logologin {
+  background: none;
+  width: 150px;
+  height: 150px;
+  margin: 0 50px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
 
 .button-lgn {
-  font-size: 15px;
+  font-size: 20px;
   margin-right: 5px;
+  width: 80px;
 
 }
 
@@ -116,14 +126,36 @@ button {
   margin-top: 10px;
   font-size: 15px;
   margin-right: 5px;
+  width: 90px;
+  font-size: 30px;
 
 }
 
 .button-reg {
   background: linear-gradient(90deg, #daae51 0%, #d53369 100%);
-  font-size: 15px;
+  font-size: 20px;
   margin-right: 5px;
+  width: 80px;
+}
 
+.registrar {
+
+  margin-top: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 2px;
+
+  font-size: 30px;
+}
+
+.button-reg2 {
+
+  background: linear-gradient(90deg, #daae51 0%, #d53369 100%);
+  font-size: 15px;
+  width: 215px;
+
+  margin-right: auto;
+  margin-left: auto;
 
 }
 
@@ -133,15 +165,17 @@ button {
 }
 
 .button-cad2 {
+  padding: 1px;
   font-size: 9px;
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
-  width: 100px;
+
+
+  font-size: 15px;
+  width: 215px;
 
 }
-
-
 
 .logo {
   border-radius: 0px;
@@ -156,4 +190,57 @@ button {
   align-items: center;
   width: 100px;
 
+}
+
+
+#header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 70px;
+  width: auto;
+  padding: 5px;
+  justify-content: space-between;
+  background: #ff451b;
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+#menu {
+
+  display: flex;
+  align-items: center;
+  border: 0px solid #ccc;
+
+}
+
+.menu ul {
+  justify-content: space-between;
+}
+
+#btn-mobile {
+  display: block;
+
+
+}
+
+@media(max-width: 400x) {
+  #btn-mobile {
+    display: block;
+  }
+
+  #menu {
+    /* display: none;*/
+    position: absolute;
+    width: 100%;
+    top: 70px;
+    right: 0px;
+
+  }
+
+  #nav.active #menu {
+    display: flex;
+  }
 }

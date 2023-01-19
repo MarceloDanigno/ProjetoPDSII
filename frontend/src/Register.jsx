@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from './headit.png';
 
 export const Register = (props) => {
     const [email, setEmail] = useState('');
@@ -27,15 +28,21 @@ export const Register = (props) => {
 
     return (
         <div className="auth-form-container">
+            <button className="logologin" onClick={() => props.onFormSwitch('Homepage')}>
+                <img src={logo} width="150" height="150" />
+            </button>
             <h2>Registro</h2>
             <form className="register-form" onSubmit={handleSubmit}>
                 <label htmlFor="username" > Nome de usuário </label>
                 <input value={username} onChange={(ev) => setUsername(ev.target.value)} username="username" id="username" placeholder="Digite um nome de usuário" />
+
                 <label htmlFor="email"> Email </label>
                 <input value={email} onChange={(ev) => setEmail(ev.target.value)} type="email" placeholder="Digite seu email" id="email" name="email" />
+
                 <label htmlFor="password"> Senha </label>
                 <input value={password} onChange={(ev) => setPassword(ev.target.value)} type="password" placeholder="Digite sua senha" id="password" name="password" />
-                <button type="submit" >Registrar</button>
+
+                <button className="registrar" type="submit">Registrar</button>
             </form>
             <button className="button-reg2" onClick={() => props.onFormSwitch('login')}> Já possui conta? Clique aqui </button>
         </div>
