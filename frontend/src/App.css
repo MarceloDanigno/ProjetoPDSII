@@ -173,12 +173,14 @@ button {
 
 .barrinha {
   position: relative;
-  right: 25%;
+  right: 20%;
 
 }
 
 .All {
+  position: relative;
   font-size: 9px;
+  right: 26%;
   padding: 2px;
 
 }
@@ -213,16 +215,17 @@ button {
 #header {
   box-sizing: border-box;
   display: flex;
+  position: fixed;
   align-items: center;
-  height: 65px;
-  padding: 5px;
+  height: 56px;
+  padding: 1px;
   justify-content: space-between;
   background: #ff451b;
-  position: fixed;
+
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  border: 3px inset rgb(255, 255, 255);
+  border: 2px inset rgb(255, 255, 255);
 
 }
 
