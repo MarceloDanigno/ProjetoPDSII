@@ -96,7 +96,7 @@ app.post("/register", async (req, res, next) => {
 
         // Manda resposta de sucesso -- Util mandar algo para mostrar para o cliente de oque deu errado -- fazer ifs para cada um que encontrar
     //    res.status(500).send(JSON.stringify({code : 0, value : "username"}));
-        res.stats(500).json({ msg: "deu ruim"})
+        res.stats(500).json({ msg: "erro de registro", status: "500"})
     }
 });
 
@@ -118,7 +118,7 @@ app.post("/auth", async (req, res, next)=> {
         }
         else{
           console.log("[LOG] Autenticação falhou!");
-          res.status(500).json({ msg: "deu ruim"})
+          res.status(500).json({ msg: "erro de autenticação", status: "500"})
         }
 
 
@@ -127,7 +127,7 @@ app.post("/auth", async (req, res, next)=> {
  // Manda resposta de sucesso -- Pode ser qualquer coisa, como send(JSON.stringify({username : req.body.username}))
   } catch (error) {
       console.error("[ERRO] " + error);
-      res.status(500).json({ msg: "deu ruim"})
+      res.status(500).json({ msg: "erro de autenticação", status: "500"})
   }
 });
 
@@ -141,7 +141,7 @@ app.post("/community", async (req, res) => {
     
   } catch (error) {
     console.error("[ERRO] " + error);
-    res.status(500).json({ msg: "deu ruim"})
+    res.status(500).json({ msg: "erro em criar comunidade", status: "500"})
   }
 });
 
@@ -155,33 +155,43 @@ app.post("/communityWithPosts", async (req, res) => {
     
   } catch (error) {
     console.error("[ERRO] " + error);
-    res.status(500).json({ msg: "deu ruim"})
+    res.status(500).json({ msg: "erro em criar comunidade com posts", status: "500"})
   }
 });
+
+app.get("/debugCleanCommunities", function(req, res){
+   try {
+      Community.collection.drop();
+      console.log("[DEBUG] Comunidades limpas");
+   } catch (error) {
+      console.error("[ERRO] " + error);
+      res.status(500).json({ msg: "erro em limpar comunidades", status: "500"})
+  }
+})
 
 app.all("/debugFillCommunities", async (req, res) => {
   try {
     let comm1 = {nameCommunity:"News", descricaoCommunity: "Nóticias do Brasil aqui!",
                  posts:`[{postAuthor: "Marcelo", postTitle: "Variante Omicron XBB.1.5 detectada na India", postDesc: "https://www.cnn.com/2023/01/01/americas/brazil-lula-da-silva-inauguration-intl/index.html",
-                         postComments: [], postKarma: 8000, postData: new Date()},
+                         postComments: [], postKarma: 8000, postData: (new Date()).toString()},
                          {postAuthor: "Andrew", postTitle: "Kim Jonh Un declara aumentar seu arsenal nucelar", postDesc: "https://www.theguardian.com/world/2023/jan/01/brazil-lula-presidency-new-era",
-                         postComments: [], postKarma: 6000, postData: new Date(new Date().setHours(new Date().getHours() + 2))},
+                         postComments: [], postKarma: 6000, postData: (new Date(new Date().setHours(new Date().getHours() + 2))).toString()},
                          {postAuthor: "Jordan", postTitle: "640 carros incediados na França durante festas de Ano Novo", postDesc: "https://au.news.yahoo.com/france-says-690-cars-torched-133317204.html",
-                         postComments: [], postKarma: 10000, postData: new Date(new Date().setHours(new Date().getHours() + 8))}]`}
+                         postComments: [], postKarma: 10000, postData: (new Date(new Date().setHours(new Date().getHours() + 8))).toString()}]`}
     let comm2 = {nameCommunity:"Ask", descricaoCommunity: "Alguma Pergunta?",
                  posts:`[{postAuthor: "Marcelo", postTitle: "Que coisa pequena te irrita?", postDesc: "Eu pessoalmente não gosto de sorvete muito sólido, fica ruim de comer. :(",
-                         postComments: [], postKarma: 600, postData: new Date(new Date().setHours(new Date().getHours() + 1))},
+                         postComments: [], postKarma: 600, postData: (new Date(new Date().setHours(new Date().getHours() + 1))).toString()},
                          {postAuthor: "Andrew", postTitle: "Qual melhor filme ou série animada que você já assistiu?", postDesc: "Ex: A Viagem de Chihiro",
-                         postComments: [], postKarma: 12000, postData: new Date(new Date().setHours(new Date().getHours() + 4))},
+                         postComments: [], postKarma: 12000, postData: (new Date(new Date().setHours(new Date().getHours() + 4))).toString()},
                          {postAuthor: "Jordan", postTitle: "Como você toma seu café?", postDesc: "Só para saber...",
-                         postComments: [], postKarma: 5000, postData: new Date(new Date().setHours(new Date().getHours() + 9))}]`}
+                         postComments: [], postKarma: 5000, postData: (new Date(new Date().setHours(new Date().getHours() + 9))).toString()}]`}
     let comm3 = {nameCommunity:"Games", descricaoCommunity: "Tude de novo sobre Jogos",
                  posts:`[{postAuthor: "Marcelo", postTitle: "Konami dá nóticias sobre desenvolvimento de série notória", postDesc: "https://www.gematsu.com/2022/12/konami-teases-new-developments-for-familiar-series-and-unannounced-new-projects-in-the-works",
-                         postComments: [], postKarma: 5500, postData: new Date(new Date().setHours(new Date().getHours() + 13))},
+                         postComments: [], postKarma: 5500, postData: (new Date(new Date().setHours(new Date().getHours() + 13))).toString()},
                          {postAuthor: "Andrew", postTitle: "A história do Dragon Age", postDesc: "https://youtu.be/sdpLGPb8Bg8",
-                         postComments: [], postKarma: 8200, postData: new Date(new Date().setHours(new Date().getHours() + 5))},
+                         postComments: [], postKarma: 8200, postData: (new Date(new Date().setHours(new Date().getHours() + 5))).toString()},
                          {postAuthor: "Jordan", postTitle: "Factorio atinge 3.5 milhões de vendas", postDesc: "https://www.factorio.com/blog/post/fff-372",
-                         postComments: [], postKarma: 500, postData: new Date(new Date().setHours(new Date().getHours() + 23))}]`}
+                         postComments: [], postKarma: 500, postData: (new Date(new Date().setHours(new Date().getHours() + 23))).toString()}]`}
     
     await community.computeNewCommunity(Community, comm1.nameCommunity,
                                     comm1.descricaoCommunity,
@@ -199,7 +209,7 @@ app.all("/debugFillCommunities", async (req, res) => {
     
   } catch (error) {
     console.error("[ERRO] " + error);
-    res.status(500).json({ msg: "deu ruim"})
+    res.status(500).json({ msg: "erro em preencher comunidades", status: "500"})
   }
 });
 
